@@ -1,11 +1,9 @@
-import java.util.*;
-
 /**
  * @ClassName StudentCollection
  * @author Matthew Tse
  *
  */
-public class StudentCollection {
+public class StudentCollection implements Cloneable {
 	//keeps identification numbers of students
 	private String[] ids;
 	//keeps the names of students
@@ -16,7 +14,28 @@ public class StudentCollection {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		StudentCollection testOne = new StudentCollection();
+		
+		//first
+		String testEmpty = Boolean.toString(testOne.isEmpty());
+		System.out.println(testEmpty);
+		
+		StudentCollection testTwo = new StudentCollection(); 
+		testTwo = testOne.clone();
+		testOne.printStudents();
+		testTwo.printStudents();
+		
+		//input
+		testOne.put("U12-34-5678", "John Smith");
+		testOne.put("U12-34-5678", "Jerry Smith");
+		testOne.put("U22-33-4444", "Jane Doe");
+		
+		//second
+		String testFill = Boolean.toString(testOne.isEmpty());
+		System.out.println(testFill);
+		testTwo = testOne.clone();
+		testOne.printStudents();
+		testTwo.printStudents();
 		
 				
 	}
@@ -35,8 +54,8 @@ public class StudentCollection {
 	 */
 	private int findIndex(String id) {
 		int idx = -1;
-		
-		for (int i = 0; i < ids.length; i++) {
+
+		for (int i = 0; i < size; i++) {
 			
 			if (ids[i] == id) {
 				idx = i;
@@ -59,7 +78,7 @@ public class StudentCollection {
 	public int size() {
 		int cntr = 0;
 		
-		for (int i = 0; i < ids.length; i++) {
+		for (int i = 0; i < size; i++) {
 			cntr++;
 		}
 		
@@ -96,14 +115,14 @@ public class StudentCollection {
 	 * 	
 	 */
 	public String get(String id) {
-		String name = null;
-		for (int i = 0; i < names.length; i++) {
+		String ret_val = null;
+		for (int i = 0; i < size; i++) {
 			if (i == Integer.parseInt(id)) {
-				name = names[i];
+				ret_val = names[i];
 			}
 		}
 		
-		return name;
+		return ret_val;
 	}
 	
 	/*
@@ -120,14 +139,22 @@ public class StudentCollection {
 	 */
 	public String put(String id, String name) {
 		String rName = null;
-		//if element is not found
-		//add it to end of array
-		if (this.findIndex(id) == -1) {
-			int lenIds = ids.length;
-			int lenNames = names.length;
-			String newIds[] = ids.clone();
-			String newNames[] = names.clone();
+
+		//if id already exists
+		if (this.findIndex(id) != -1) {
+			rName = names[Integer.parseInt(id)];
+			ids[size] = id;
+			names[size] = name;				
+			size++;	
+		//add it to array
+		} else {
+	
+			ids[size] = id;
+			names[size] = name;				
+			size++;	
+			
 		}
+
 		return rName;
 	}
 	
@@ -150,7 +177,7 @@ public class StudentCollection {
 		//check null id
 		if (this.get(id) != null) {
 			//loop into list
-			for (int i = 0; i < names.length; i++) {
+			for (int i = 0; i < size; i++) {
 				//find matching index with entered id
 				if (this.findIndex(id) == Integer.parseInt(id)) {
 					ids[i - 2] = ids[i - 1];
@@ -167,9 +194,10 @@ public class StudentCollection {
 	/*
 	 * @Method clone
 	 * @returns
-	*   	The return value is a copy of this bag. Subsequent changes to the
-	*   	copy will not affect the original, nor vice versa.
+	 *   	The return value is a copy of this bag. Subsequent changes to the
+	 *   	copy will not affect the original, nor vice versa.
 	 * @exception
+	 * 		CloneNotSupportedException
 	 * 		OutOfMemoryError
 	 *   		Indicates insufficient memory for creating the clone.
 	 * 	
@@ -189,6 +217,21 @@ public class StudentCollection {
 		
 	}
 	
+	/*
+	 * @Method printStudents
+	 * 	
+	 */
+	public void printStudents() {
+		if (size > 0) {
+			for (int i = 0; i < size; i++) {
+				System.out.print("Id: " + ids[i] + ", ");
+				System.out.println("Name: " + names[i]);
+			}
+		} else {
+			System.out.println("no students");
+		}
+
+	}
 	
 
 }
