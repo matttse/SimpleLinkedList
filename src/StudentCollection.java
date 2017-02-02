@@ -1,3 +1,4 @@
+
 /**
  * @ClassName StudentCollection
  * @author Matthew Tse
@@ -5,11 +6,11 @@
  */
 public class StudentCollection implements Cloneable {
 	//keeps identification numbers of students
-	private String[] ids;
+	private String[] ids = new String[20];
 	//keeps the names of students
-	private String[] names;
+	private String[] names = new String[20];
 	//number of students currently in collection
-	private int size;
+	private int size = 20;
 	/**
 	 * @param args
 	 */
@@ -22,22 +23,51 @@ public class StudentCollection implements Cloneable {
 		
 		StudentCollection testTwo = new StudentCollection(); 
 		testTwo = testOne.clone();
+		System.out.println("testOne empty");
 		testOne.printStudents();
+		System.out.println("end\n");
+		System.out.println("testTwo clone empty");
 		testTwo.printStudents();
-		
+		System.out.println("end\n");
 		//input
-		testOne.put("U12-34-5678", "John Smith");
-		testOne.put("U12-34-5678", "Jerry Smith");
-		testOne.put("U22-33-4444", "Jane Doe");
+		System.out.println("put student 1");
+		
+		System.out.println(testOne.put("U12-34-5678", "John Smith"));
+		
+		testOne.printStudents();
+		System.out.println("end\n");
+		
+		System.out.println("put student 2");
+		
+		System.out.println(testOne.put("U22-33-4444", "Jane Doe"));
+		
+		
+		testOne.printStudents();
+		
+		System.out.println("end\n");
+		System.out.println("put student 3 update");
+		
+		String testNameOut = testOne.put("U12-34-5678", "Jerry Smith");
+		System.out.println(testNameOut);
+		
+		testOne.printStudents();
+		System.out.println("end\n");
 		
 		//second
 		String testFill = Boolean.toString(testOne.isEmpty());
 		System.out.println(testFill);
 		testTwo = testOne.clone();
-		testOne.printStudents();
+		System.out.println("testTwo clone");
 		testTwo.printStudents();
+		System.out.println("end\n");
 		
-				
+		//third
+//		String id = "U22-33-4444";
+		String id = "U12-34-5678";
+		testTwo.remove(id);
+		System.out.println("testTwo remove");
+		testTwo.printStudents();
+		System.out.println("end\n");
 	}
 	
 	/*
@@ -79,7 +109,10 @@ public class StudentCollection implements Cloneable {
 		int cntr = 0;
 		
 		for (int i = 0; i < size; i++) {
-			cntr++;
+			if (ids[i] != null) {
+				cntr++;	
+			}
+			
 		}
 		
 		return cntr;
@@ -95,7 +128,7 @@ public class StudentCollection implements Cloneable {
 	public boolean isEmpty() {
 		boolean stat = false;
 		
-		if (this.size() > 0) {
+		if (this.size() == 0) {
 			stat = true;
 		}
 		
@@ -140,21 +173,37 @@ public class StudentCollection implements Cloneable {
 	public String put(String id, String name) {
 		String rName = null;
 
-		//if id already exists
-		if (this.findIndex(id) != -1) {
-			rName = names[Integer.parseInt(id)];
-			ids[size] = id;
-			names[size] = name;				
-			size++;	
-		//add it to array
-		} else {
-	
-			ids[size] = id;
-			names[size] = name;				
-			size++;	
+		for (int i = 0; i < size; i++) {
+			//if array ids index vale is null
+			//and array names index is not the same as input name
+			while (ids[i] == null) {
+				names[i] = name;
+				ids[i] = id;
+				
+			}
 			
-		}
+			//if not found
+			if (this.findIndex(id) == -1) {
+				if (i > 0) {
+					if (ids[i-1] == id) {
+						ids[i] = null;
+						names[i] = null;
+						break;
+					}
+				}
+			//if name already exists
+			} else if (name != names[i] && id == ids[i]) {
+				rName = names[i];
+				names[i] = name;			
+				break;
+			//else update
+			} else {
+				break;
 
+			}			
+						
+		}
+		
 		return rName;
 	}
 	
@@ -174,14 +223,16 @@ public class StudentCollection implements Cloneable {
 	 */
 	public String remove(String id) {
 		String ret_val = null;
+		int idx = 0;
 		//check null id
-		if (this.get(id) != null) {
+		if (id != null) {
 			//loop into list
 			for (int i = 0; i < size; i++) {
 				//find matching index with entered id
-				if (this.findIndex(id) == Integer.parseInt(id)) {
-					ids[i - 2] = ids[i - 1];
-					names[i - 2] = names[i - 1];
+				if (this.findIndex(id) >= 0) {
+					idx = this.findIndex(id);
+					ids[idx] = null;
+					names[idx] = null;
 					
 				}
 			}
@@ -222,13 +273,9 @@ public class StudentCollection implements Cloneable {
 	 * 	
 	 */
 	public void printStudents() {
-		if (size > 0) {
-			for (int i = 0; i < size; i++) {
-				System.out.print("Id: " + ids[i] + ", ");
-				System.out.println("Name: " + names[i]);
-			}
-		} else {
-			System.out.println("no students");
+		for (int i = 0; i < size; i++) {
+			System.out.print("Id: " + ids[i] + ", ");
+			System.out.println("Name: " + names[i]);					
 		}
 
 	}
