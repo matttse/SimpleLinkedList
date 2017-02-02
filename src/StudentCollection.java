@@ -30,14 +30,14 @@ public class StudentCollection implements Cloneable {
 		testTwo.printStudents();
 		System.out.println("end\n");
 		//input
-		System.out.println("put student 1");
+		System.out.println("testOne put student 1");
 		
 		System.out.println(testOne.put("U12-34-5678", "John Smith"));
 		
 		testOne.printStudents();
 		System.out.println("end\n");
 		
-		System.out.println("put student 2");
+		System.out.println("testOne put student 2");
 		
 		System.out.println(testOne.put("U22-33-4444", "Jane Doe"));
 		
@@ -45,7 +45,7 @@ public class StudentCollection implements Cloneable {
 		testOne.printStudents();
 		
 		System.out.println("end\n");
-		System.out.println("put student 3 update");
+		System.out.println("testOne put student 3 update");
 		
 		String testNameOut = testOne.put("U12-34-5678", "Jerry Smith");
 		System.out.println(testNameOut);
@@ -62,11 +62,31 @@ public class StudentCollection implements Cloneable {
 		System.out.println("end\n");
 		
 		//third
-//		String id = "U22-33-4444";
-		String id = "U12-34-5678";
+		String id = "U22-33-4444";
+//		String id = "U12-34-5678";
 		testTwo.remove(id);
 		System.out.println("testTwo remove");
 		testTwo.printStudents();
+		System.out.println("end\n");
+		
+		//four
+//		String id = "U22-33-4444";
+		String id2 = "U12-34-5678";
+		
+		System.out.println("testTwo get");
+		System.out.println(testTwo.get(id2));
+		System.out.println("end\n");
+			
+		System.out.println("testOne get");
+		System.out.println(testOne.get(id2));
+		System.out.println("end\n");
+		
+		System.out.println("testOne size");
+		System.out.println(testOne.size());
+		System.out.println("end\n");
+		
+		System.out.println("testOne all");
+		testOne.printStudents();
 		System.out.println("end\n");
 	}
 	
@@ -150,7 +170,7 @@ public class StudentCollection implements Cloneable {
 	public String get(String id) {
 		String ret_val = null;
 		for (int i = 0; i < size; i++) {
-			if (i == Integer.parseInt(id)) {
+			if (ids[i] == id) {
 				ret_val = names[i];
 			}
 		}
