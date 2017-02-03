@@ -77,7 +77,6 @@ public class StudentCollection implements Cloneable {
 		System.out.println(testTwo.get(id2));
 		System.out.println("end\n");
 		
-		System.out.println("end\n");
 		System.out.println("--------------------------");
 		//four		
 		System.out.println("testOne get 1");
@@ -98,8 +97,10 @@ public class StudentCollection implements Cloneable {
 		
 		System.out.println("remove");
 		//five
-		testOne.remove(id2);
+//		testOne.remove(id2);
 		testOne.remove(id);
+		testTwo.remove(id2);
+//		testTwo.remove(id);
 		System.out.println("testTwo get 1");
 		System.out.println(testTwo.get(id));
 		System.out.println("end\n");
