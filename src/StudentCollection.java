@@ -15,6 +15,7 @@ public class StudentCollection implements Cloneable {
 	private int size = 20;
 
 	/**
+	 * @Method Main
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -99,7 +100,7 @@ public class StudentCollection implements Cloneable {
 		//five
 //		testOne.remove(id2);
 		testOne.remove(id);
-		testTwo.remove(id2);
+//		testTwo.remove(id2);
 //		testTwo.remove(id);
 		System.out.println("testTwo get 1");
 		System.out.println(testTwo.get(id));
@@ -127,14 +128,22 @@ public class StudentCollection implements Cloneable {
 		testTwo.printStudents();
 		System.out.println("end\n");
 		System.out.println("--------------------------");
-		
+		System.out.println("--------------------------");
+		System.out.println("testOne size");
+		System.out.println(testOne.size());
+		System.out.println("end\n");
+		System.out.println("testTwo size");
+		System.out.println(testTwo.size());
+		System.out.println("end\n");
+		System.out.println("--------------------------");
+
 	}
 	
 	/*
 	 * @Method findIndex
 	 * @param String id
 	 * @precondition
-	 * 		array ids must have at least 1 element
+	 * 		size must be instantiated
 	 * @returns
 	 * 		returns the index of the element
 	 * 		defaults to -1 when none found
@@ -143,16 +152,16 @@ public class StudentCollection implements Cloneable {
 	 * 	
 	 */
 	private int findIndex(String id) {
+		//initialize index
 		int idx = -1;
-		
+		//loop index
 		for (int i = 0; i < size; i++) {
-			
+			//where the string value id exists in the array
 			if (ids[i] == id) {
-				idx = i;
-				
-			}
-			
-		}
+				//set index to idx
+				idx = i;				
+			}//end if
+		}//end index loop
 		
 		return idx;
 		
@@ -161,19 +170,19 @@ public class StudentCollection implements Cloneable {
 	/*
 	 * @Method size
 	 * @returns
-	 * 		returns the number of elements in collection
-	 * 		 		
-	 * 	
+	 * 		returns the number of elements in collection	
 	 */
 	public int size() {
+		//initialize counter
 		int cntr = 0;
-		
+		//loop into array
 		for (int i = 0; i < size; i++) {
-			if (ids[i] != null) {
+			//where values exist in either list
+			if (ids[i] != null && names[i] != null) {
+				//increment
 				cntr++;	
-			}
-			
-		}
+			}//end if
+		}//end for
 		
 		return cntr;
 		
@@ -186,11 +195,12 @@ public class StudentCollection implements Cloneable {
 	 * 	
 	 */
 	public boolean isEmpty() {
-		boolean stat = false;
-		
-		if (this.size() == 0) {
-			stat = true;
-		}
+		//initialize return value; default to empty
+		boolean stat = true;
+		//check if size has been incremented
+		if (this.size() != 0) {
+			stat = false;
+		}//end if
 		
 		return stat;
 	}
@@ -208,12 +218,15 @@ public class StudentCollection implements Cloneable {
 	 * 	
 	 */
 	public String get(String id) {
+		//initialize return value to null
 		String ret_val = null;
+		//loop into arrays
 		for (int i = 0; i < size; i++) {
+			//where the id string is the same as the stored string from ids
 			if (ids[i] == id) {
 				ret_val = names[i];
-			}
-		}
+			}//end if
+		}//end for
 		
 		return ret_val;
 	}
@@ -224,6 +237,8 @@ public class StudentCollection implements Cloneable {
 	 * 		array ids and names must have at least 1 element
 	 * @returns
 	 * 		returns name
+	 * @postcondition
+	 * 		new value exists at index for both lists
 	 * @exception
 	 * 		UnsupportedOperationException - if the put operation is not supported by this map
 	 * 		ClassCastException - if the class of the specified key or value prevents it from being stored in this map
@@ -231,11 +246,11 @@ public class StudentCollection implements Cloneable {
 	 * 		IllegalArgumentException - if some property of the specified key or value prevents it from being stored in this map
 	 */
 	public String put(String id, String name) {
+		//initialize return name
 		String rName = null;
-
+		//loop into list
 		for (int i = 0; i < size; i++) {
-			//if array ids index vale is null
-			//and array names index is not the same as input name
+			//while array ids index value is null
 			while (ids[i] == null) {
 				names[i] = name;
 				ids[i] = id;
@@ -249,8 +264,8 @@ public class StudentCollection implements Cloneable {
 						ids[i] = null;
 						names[i] = null;
 						break;
-					}
-				}
+					}//end if replace value
+				}//end if not the first value to avoid exception
 			//if name already exists
 			} else if (name != names[i] && id == ids[i]) {
 				rName = names[i];
@@ -260,9 +275,9 @@ public class StudentCollection implements Cloneable {
 			} else {
 				break;
 
-			}			
+			}//end if			
 						
-		}
+		}//end for
 		
 		return rName;
 	}
@@ -274,7 +289,8 @@ public class StudentCollection implements Cloneable {
 	 * 		key whose mapping is to be removed from the map
 	 * @returns
 	 * 		the previous value associated with key, or null if there was no mapping for key.
-	 * 		
+	 * @postcondition
+	 * 		value at index is reset to null	
 	 * @exception
 	 * 		UnsupportedOperationException - if the remove operation is not supported by this map
 	 * 		ClassCastException - if the key is of an inappropriate type for this map (optional)
@@ -282,7 +298,9 @@ public class StudentCollection implements Cloneable {
 	 * 	
 	 */
 	public String remove(String id) {
+		//initialize return value
 		String ret_val = null;
+		//initialize index
 		int idx = 0;
 		//check null id
 		if (id != null) {
@@ -294,10 +312,9 @@ public class StudentCollection implements Cloneable {
 					ids[idx] = null;
 					names[idx] = null;
 					
-				}
-			}
-				 
-		}		
+				}//end if found index
+			}//end for loop
+		}//end if check		
 		
 		return ret_val;
 	}
@@ -307,6 +324,8 @@ public class StudentCollection implements Cloneable {
 	 * @returns
 	 *   	The return value is a copy of this bag. Subsequent changes to the
 	 *   	copy will not affect the original, nor vice versa.
+	 * @postcondition
+	 * 		creates a clone copy of object and properties that is independent of original
 	 * @exception
 	 * 		CloneNotSupportedException
 	 * 		OutOfMemoryError
@@ -314,18 +333,20 @@ public class StudentCollection implements Cloneable {
 	 * 	
 	 */
 	public StudentCollection clone() {
+		//instantiate collection
 		StudentCollection collection;
-//		collection = new StudentCollection(this.ids);
+		//try clone
 		try {
+			//make deep clone
 			collection = (StudentCollection) super.clone();
 			collection.ids = this.ids.clone();
 			collection.names = this.names.clone();
+		//catch exception
 		} catch (CloneNotSupportedException e) {
 			
 		      throw new RuntimeException
 		      ("This class does not implement Cloneable");
-		}
-		
+		}		
 		
 		return collection;
 		
