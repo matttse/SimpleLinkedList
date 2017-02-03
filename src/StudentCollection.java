@@ -29,8 +29,8 @@ public class StudentCollection implements Cloneable {
 		String testEmpty = Boolean.toString(testOne.isEmpty());
 		System.out.println(testEmpty);
 		System.out.println("--------------------------");
-//		StudentCollection testTwo = new StudentCollection(); 
-		StudentCollection testTwo = testOne.clone();
+		StudentCollection testTwo = new StudentCollection(); 
+		testTwo = (StudentCollection) testOne.clone();
 		System.out.println("testOne empty");
 		
 		testOne.printStudents();
@@ -88,6 +88,15 @@ public class StudentCollection implements Cloneable {
 		System.out.println(testOne.get(id2));
 		System.out.println("end\n");
 		System.out.println("--------------------------");
+		System.out.println("--------------------------");
+		System.out.println("clone after");
+		testTwo = testOne.clone();
+		testTwo.printStudents();
+		System.out.println("end\n");
+		System.out.println("--------------------------");
+		System.out.println("--------------------------");
+		
+		System.out.println("remove");
 		//five
 		testOne.remove(id2);
 		testOne.remove(id);
@@ -98,7 +107,7 @@ public class StudentCollection implements Cloneable {
 		System.out.println("testTwo get 2");
 		System.out.println(testTwo.get(id2));
 		System.out.println("end\n");
-				
+		System.out.println("--------------------------");
 		//four		
 		System.out.println("testOne get 1");
 		System.out.println(testOne.get(id));
@@ -107,6 +116,16 @@ public class StudentCollection implements Cloneable {
 		System.out.println("testOne get 2");
 		System.out.println(testOne.get(id2));
 		System.out.println("end\n");
+		System.out.println("--------------------------");
+		System.out.println("--------------------------");
+		System.out.println("testOne ");
+		
+		testOne.printStudents();
+		System.out.println("end\n");
+		System.out.println("testTwo clone ");
+		testTwo.printStudents();
+		System.out.println("end\n");
+		System.out.println("--------------------------");
 		
 	}
 	
@@ -298,7 +317,8 @@ public class StudentCollection implements Cloneable {
 //		collection = new StudentCollection(this.ids);
 		try {
 			collection = (StudentCollection) super.clone();
-			
+			collection.ids = this.ids.clone();
+			collection.names = this.names.clone();
 		} catch (CloneNotSupportedException e) {
 			
 		      throw new RuntimeException
